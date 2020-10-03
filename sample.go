@@ -28,4 +28,3 @@ func main() {
 
 	fmt.Printf("output market list: %#v\n", outputMarkets[0])
 }
-
