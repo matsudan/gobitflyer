@@ -28,8 +28,6 @@ type Options struct {
 	Version string
 }
 
-
-
 func New(options Options) (*Client, error) {
 	u, err := url.Parse(BaseURL)
 	if err != nil {
