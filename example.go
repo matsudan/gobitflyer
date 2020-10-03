@@ -53,4 +53,11 @@ func main() {
 	//}
 	//
 	//fmt.Printf("board state: %#v\n", outputBoardState)
+
+	outputChats, err := client.GetChatList(ctx, "2020-10-01")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("chats: %#v\n", outputChats[0])
 }

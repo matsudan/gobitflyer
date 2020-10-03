@@ -28,7 +28,7 @@ type Board struct {
 type Ticker struct {
 	ProductCode     string  `json:"product_code"`
 	State           string  `json:"state"`
-	TimeStamp       string  `json:"timestamp"`
+	Timestamp       string  `json:"timestamp"`
 	TickID          int64   `json:"tick_id"`
 	BestBid         float64 `json:"best_bid"`
 	BestAsk         float64 `json:"best_ask"`
@@ -67,6 +67,12 @@ type BoardState struct {
 	Health string         `json:"health"`
 	State  string         `json:"state"`
 	Data   BoardStateData `json:"data"`
+}
+
+type Chat struct {
+	Nickname string `json:"nickname"`
+	Message  string `json:"message"`
+	Date     string `json:"date"`
 }
 
 func (c *Client) GetHealth(ctx context.Context) (*GetHealthOutput, error) {
@@ -214,4 +220,27 @@ func (c *Client) GetBoardState(ctx context.Context, productCode string) (*BoardS
 	}
 
 	return &output, nil
+}
+
+func (c *Client) GetChatList(ctx context.Context, fromDate string) ([]*Chat, error) {
+	req, err := c.NewRequest(ctx, "GET", "getchats", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	q.Add("from_date", fromDate)
+	req.URL.RawQuery = q.Encode()
+
+	res, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	output := []*Chat{}
+	if err := decodeBody(res, &output); err != nil {
+		return nil, err
+	}
+
+	return output, nil
 }
