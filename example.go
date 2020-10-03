@@ -14,17 +14,25 @@ func main() {
 	client, _ := lightning.New(options)
 
 	ctx := context.Background()
-	outputHealth, err := client.GetHealth(ctx)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("output health: %#v\n", *outputHealth)
 
 	outputMarkets, err := client.GetMarketList(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("output market list: %#v\n", outputMarkets[0])
+	fmt.Printf("market list: %#v\n", outputMarkets[0])
+
+	//outputBoard, err := client.GetBoard(ctx, "BTC_JPY")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("output board: %#v\n", outputBoard)
+
+	outputTicker, err := client.GetTicker(ctx, "BTC_JPY")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("ticker: %#v\n", outputTicker)
 }
