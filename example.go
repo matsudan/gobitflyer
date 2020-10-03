@@ -35,4 +35,15 @@ func main() {
 	}
 
 	fmt.Printf("ticker: %#v\n", outputTicker)
+
+	pq := lightning.PaginationQuery{
+		Count: "10",
+	}
+
+	outputExecutions, err := client.GetExecutionList(ctx, "BTC_JPY", pq)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("executions: %#v\n", outputExecutions[0])
 }
