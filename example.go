@@ -46,4 +46,11 @@ func main() {
 	}
 
 	fmt.Printf("executions: %#v\n", outputExecutions[0])
+
+	//outputBoardState, err := client.GetBoardState(ctx, "BTC_JPY")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("board state: %#v\n", outputBoardState)
 }

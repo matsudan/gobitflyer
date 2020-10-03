@@ -59,6 +59,16 @@ type PaginationQuery struct {
 	After  string
 }
 
+type BoardStateData struct {
+	SpecialQuotation float64 `json:"special_quotation"`
+}
+
+type BoardState struct {
+	Health string         `json:"health"`
+	State  string         `json:"state"`
+	Data   BoardStateData `json:"data"`
+}
+
 func (c *Client) GetHealth(ctx context.Context) (*GetHealthOutput, error) {
 	req, err := c.NewRequest(ctx, "GET", "gethealth", nil)
 	if err != nil {
@@ -111,7 +121,7 @@ func (c *Client) GetMarketList(ctx context.Context) ([]*Market, error) {
 //	if err != nil {
 //		return nil, err
 //	}
-//
+//  // TODO: resolve the error `json: cannot unmarshal array into Go value of type lightning.BoardState`
 //	output := Board{}
 //	if err := decodeBody(res, &output); err != nil {
 //		return nil, err
@@ -179,4 +189,29 @@ func (c *Client) GetExecutionList(ctx context.Context, productCode string, pagin
 	}
 
 	return output, nil
+}
+
+func (c *Client) GetBoardState(ctx context.Context, productCode string) (*BoardState, error) {
+	req, err := c.NewRequest(ctx, "GET", "executions", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	q.Add("product_code", productCode)
+
+	req.URL.RawQuery = q.Encode()
+
+	res, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// TODO: resolve the error `json: cannot unmarshal array into Go value of type lightning.BoardState`
+	output := BoardState{}
+	if err := decodeBody(res, &output); err != nil {
+		return nil, err
+	}
+
+	return &output, nil
 }
