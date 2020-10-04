@@ -13,6 +13,7 @@ For more detail, please see the [API documentation](https://lightning.bitflyer.c
 Please see `example.go`
 
 ## License
+Licensed under the MIT License.
 
 ## Author
 @matsudan
