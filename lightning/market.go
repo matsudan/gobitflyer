@@ -20,7 +20,7 @@ type Order struct {
 }
 
 type Board struct {
-	MidPrice string  `json:"mid_price"`
+	MidPrice float64  `json:"mid_price"`
 	Bids     []Order `json:"bids"`
 	Asks     []Order `json:"asks"`
 }
@@ -59,14 +59,12 @@ type PaginationQuery struct {
 	After  string
 }
 
-type BoardStateData struct {
-	SpecialQuotation float64 `json:"special_quotation"`
-}
-
 type BoardState struct {
-	Health string         `json:"health"`
-	State  string         `json:"state"`
-	Data   BoardStateData `json:"data"`
+	Health string `json:"health"`
+	State  string `json:"state"`
+	Data   struct {
+		SpecialQuotation float64 `json:"special_quotation"`
+	} `json:"data"`
 }
 
 type Chat struct {
@@ -113,28 +111,28 @@ func (c *Client) GetMarketList(ctx context.Context) ([]*Market, error) {
 	return output, nil
 }
 
-//func (c *Client) GetBoard(ctx context.Context, productCode string) (*Board, error) {
-//	req, err := c.NewRequest(ctx, "GET", "board", nil)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	q := req.URL.Query()
-//	q.Add("product_code", productCode)
-//	req.URL.RawQuery = q.Encode()
-//
-//	res, err := c.HTTPClient.Do(req)
-//	if err != nil {
-//		return nil, err
-//	}
-//  // TODO: resolve the error `json: cannot unmarshal array into Go value of type lightning.BoardState`
-//	output := Board{}
-//	if err := decodeBody(res, &output); err != nil {
-//		return nil, err
-//	}
-//
-//	return &output, nil
-//}
+func (c *Client) GetBoard(ctx context.Context, productCode string) (*Board, error) {
+	req, err := c.NewRequest(ctx, "GET", "board", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	q.Add("product_code", productCode)
+	req.URL.RawQuery = q.Encode()
+
+	res, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	
+	output := Board{}
+	if err := decodeBody(res, &output); err != nil {
+		return nil, err
+	}
+
+	return &output, nil
+}
 
 func (c *Client) GetTicker(ctx context.Context, productCode string) (*Ticker, error) {
 	req, err := c.NewRequest(ctx, "GET", "ticker", nil)
@@ -198,7 +196,7 @@ func (c *Client) GetExecutionList(ctx context.Context, productCode string, pagin
 }
 
 func (c *Client) GetBoardState(ctx context.Context, productCode string) (*BoardState, error) {
-	req, err := c.NewRequest(ctx, "GET", "executions", nil)
+	req, err := c.NewRequest(ctx, "GET", "getboardstate", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -213,8 +211,8 @@ func (c *Client) GetBoardState(ctx context.Context, productCode string) (*BoardS
 		return nil, err
 	}
 
-	// TODO: resolve the error `json: cannot unmarshal array into Go value of type lightning.BoardState`
 	output := BoardState{}
+
 	if err := decodeBody(res, &output); err != nil {
 		return nil, err
 	}
