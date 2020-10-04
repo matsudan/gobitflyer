@@ -29,23 +29,23 @@ func main() {
 	//
 	//fmt.Printf("output board: %#v\n", outputBoard)
 
-	outputTicker, err := client.GetTicker(ctx, "BTC_JPY")
-	if err != nil {
-		fmt.Println(err)
-	}
+	//outputTicker, err := client.GetTicker(ctx, "BTC_JPY")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("ticker: %#v\n", outputTicker)
+	//
+	//pq := lightning.PaginationQuery{
+	//	Count: "10",
+	//}
 
-	fmt.Printf("ticker: %#v\n", outputTicker)
-
-	pq := lightning.PaginationQuery{
-		Count: "10",
-	}
-
-	outputExecutions, err := client.GetExecutionList(ctx, "BTC_JPY", pq)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("executions: %#v\n", outputExecutions[0])
+	//outputExecutions, err := client.GetExecutionList(ctx, "BTC_JPY", pq)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("executions: %#v\n", outputExecutions[0])
 
 	//outputBoardState, err := client.GetBoardState(ctx, "BTC_JPY")
 	//if err != nil {
@@ -54,10 +54,10 @@ func main() {
 	//
 	//fmt.Printf("board state: %#v\n", outputBoardState)
 
-	outputChats, err := client.GetChatList(ctx, "2020-10-01")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("chats: %#v\n", outputChats[0])
+	//outputChats, err := client.GetChatList(ctx, "2020-10-01")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("chats: %#v\n", outputChats[0])
 }
