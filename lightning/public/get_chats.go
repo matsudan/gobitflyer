@@ -8,7 +8,11 @@ type Chat struct {
 	Date     string `json:"date"`
 }
 
-func (c *Client) GetChatList(ctx context.Context, fromDate string) ([]*Chat, error) {
+type GetChatListOutput struct {
+	Chats []*Chat
+}
+
+func (c *Client) GetChatList(ctx context.Context, fromDate string) (*GetChatListOutput, error) {
 	req, err := c.NewRequest(ctx, "GET", "getchats", nil)
 	if err != nil {
 		return nil, err
@@ -23,10 +27,10 @@ func (c *Client) GetChatList(ctx context.Context, fromDate string) ([]*Chat, err
 		return nil, err
 	}
 
-	output := []*Chat{}
-	if err := decodeBody(res, &output); err != nil {
+	output := GetChatListOutput{}
+	if err := decodeBody(res, &output.Chats); err != nil {
 		return nil, err
 	}
 
-	return output, nil
+	return &output, nil
 }

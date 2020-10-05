@@ -54,10 +54,10 @@ func main() {
 	//
 	//fmt.Printf("board state: %#v\n", outputBoardState)
 
-	//outputChats, err := client.GetChatList(ctx, "2020-10-01")
+	//outputChats, err := client.GetChatList(ctx, "2020-10-05")
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
 	//
-	//fmt.Printf("chats: %#v\n", outputChats[0])
+	//fmt.Printf("chats: %#v\n", outputChats.Chats[0])
 }
