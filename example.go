@@ -4,14 +4,14 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/matsudan/gobitflyer/lightning"
+	"github.com/matsudan/gobitflyer/lightning/public"
 )
 
 func main() {
-	options := lightning.Options{
+	options := public.Options{
 		Version: "v1",
 	}
-	client, _ := lightning.New(options)
+	client, _ := public.New(options)
 
 	ctx := context.Background()
 
@@ -35,11 +35,11 @@ func main() {
 	//}
 	//
 	//fmt.Printf("ticker: %#v\n", outputTicker)
-	//
-	//pq := lightning.PaginationQuery{
+
+	//pq := public.PaginationQuery{
 	//	Count: "10",
 	//}
-
+	//
 	//outputExecutions, err := client.GetExecutionList(ctx, "BTC_JPY", pq)
 	//if err != nil {
 	//	fmt.Println(err)
