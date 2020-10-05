@@ -10,7 +10,11 @@ type Market struct {
 	Alias       string `json:"alias"`
 }
 
-func (c *Client) GetMarketList(ctx context.Context) ([]*Market, error) {
+type GetMarketListOutput struct {
+	Markets []*Market
+}
+
+func (c *Client) GetMarketList(ctx context.Context) (*GetMarketListOutput, error) {
 	req, err := c.NewRequest(ctx, "GET", "markets", nil)
 	if err != nil {
 		return nil, err
@@ -21,10 +25,10 @@ func (c *Client) GetMarketList(ctx context.Context) ([]*Market, error) {
 		return nil, err
 	}
 
-	output := []*Market{}
-	if err := decodeBody(res, &output); err != nil {
+	output := GetMarketListOutput{}
+	if err := decodeBody(res, &output.Markets); err != nil {
 		return nil, err
 	}
 
-	return output, nil
+	return &output, nil
 }
