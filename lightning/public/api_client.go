@@ -1,4 +1,4 @@
-package lightning
+package public
 
 import (
 	"context"
