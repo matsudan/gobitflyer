@@ -20,7 +20,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("market list: %#v\n", outputMarkets[0])
+	fmt.Printf("market list: %#v\n", outputMarkets)
 
 	//outputBoard, err := client.GetBoard(ctx, "BTC_JPY")
 	//if err != nil {
@@ -45,7 +45,7 @@ func main() {
 	//	fmt.Println(err)
 	//}
 	//
-	//fmt.Printf("executions: %#v\n", outputExecutions[0])
+	//fmt.Printf("executions: %#v\n", outputExecutions)
 
 	//outputBoardState, err := client.GetBoardState(ctx, "BTC_JPY")
 	//if err != nil {

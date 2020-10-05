@@ -12,13 +12,17 @@ type Execution struct {
 	SellChildOrderAcceptanceID string  `json:"sell_child_order_acceptance_id"`
 }
 
+type GetExecutionListOutput struct {
+	Executions []*Execution
+}
+
 type PaginationQuery struct {
 	Count  string
 	Before string
 	After  string
 }
 
-func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery PaginationQuery) ([]*Execution, error) {
+func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery PaginationQuery) (*GetExecutionListOutput, error) {
 	req, err := c.NewRequest(ctx, "GET", "executions", nil)
 	if err != nil {
 		return nil, err
@@ -48,10 +52,10 @@ func (c *Client) GetExecutionList(ctx context.Context, productCode string, pagin
 		return nil, err
 	}
 
-	output := []*Execution{}
-	if err := decodeBody(res, &output); err != nil {
+	output := GetExecutionListOutput{}
+	if err := decodeBody(res, &output.Executions); err != nil {
 		return nil, err
 	}
 
-	return output, nil
+	return &output, nil
 }
