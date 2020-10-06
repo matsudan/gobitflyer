@@ -2,7 +2,7 @@ package public
 
 import (
 	"context"
-	"github.com/matsudan/gobitflyer/lightning/public/types"
+	"github.com/matsudan/gobitflyer/api/public/types"
 )
 
 type GetHealthOutput struct {

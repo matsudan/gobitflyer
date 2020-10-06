@@ -1,9 +1,9 @@
 package public
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
-	"io"
 	"net/http"
 	"net/url"
 	"path"
@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	BaseURL = "https://api.bitflyer.com"
+	BaseURL = "https://api.bitflyer.com/v1"
 )
 
 type HTTPClient interface {
@@ -23,17 +23,11 @@ type Client struct {
 	HTTPClient  HTTPClient
 }
 
-type Options struct {
-	// Lightning api version.
-	Version string
-}
-
-func New(options Options) (*Client, error) {
+func New() (*Client, error) {
 	u, err := url.Parse(BaseURL)
 	if err != nil {
 		return &Client{}, err
 	}
-	u.Path = path.Join(u.Path, options.Version)
 
 	client := &Client{
 		EndpointURL: u,
@@ -45,11 +39,11 @@ func New(options Options) (*Client, error) {
 	return client, nil
 }
 
-func (c *Client) NewRequest(ctx context.Context, method, spath string, body io.Reader) (*http.Request, error) {
+func (c *Client) NewRequest(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
 	u := *c.EndpointURL
 	u.Path = path.Join(c.EndpointURL.Path, spath)
 
-	req, err := http.NewRequest(method, u.String(), body)
+	req, err := http.NewRequest(method, u.String(), bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}

@@ -3,15 +3,22 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/matsudan/gobitflyer/lightning"
 
-	"github.com/matsudan/gobitflyer/lightning/public"
+	"github.com/matsudan/gobitflyer/api/public"
 )
 
 func main() {
-	options := public.Options{
-		Version: "v1",
+	cfg := lightning.NewConfig()
+	// cfg, _ := config.LoadConfig()
+
+	cfg.Credentials = lightning.Credentials{
+		APIKey: "",
+		APISecret: "",
 	}
-	client, _ := public.New(options)
+
+	//client, _ := private.NewFromConfig(cfg)
+	client, _ := public.New()
 
 	ctx := context.Background()
 

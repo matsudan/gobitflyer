@@ -2,12 +2,12 @@ package public
 
 import (
 	"context"
-	"github.com/matsudan/gobitflyer/lightning/public/types"
+	"github.com/matsudan/gobitflyer/api/public/types"
 )
 
 type GetBoardStateOutput struct {
 	Health types.Health `json:"health"`
-	State  types.State `json:"state"`
+	State  types.State  `json:"state"`
 	Data   struct {
 		SpecialQuotation float64 `json:"special_quotation"`
 	} `json:"data"`
