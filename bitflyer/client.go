@@ -25,7 +25,7 @@ type HTTPClient interface {
 
 type Client struct {
 	Region      string
-	EndpointURL *url.URL
+	BaseURL *url.URL
 	Credentials Credentials
 	HTTPClient  HTTPClient
 }
@@ -34,11 +34,9 @@ type Client struct {
 func NewClient(cfg Config) *Client {
 	u, _ := url.Parse(BaseURL)
 
-	u.Path = path.Join(u.Path, APIVersion)
-
 	client := &Client{
 		Region:      cfg.Region,
-		EndpointURL: u,
+		BaseURL: u,
 		Credentials: Credentials{
 			APIKey:    cfg.Credentials.APIKey,
 			APISecret: cfg.Credentials.APISecret,
@@ -53,8 +51,8 @@ func NewClient(cfg Config) *Client {
 
 // NewRequestPublic returns a http request for public API.
 func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
-	u := *c.EndpointURL
-	u.Path = path.Join(c.EndpointURL.Path, spath)
+	u := *c.BaseURL
+	u.Path = path.Join(c.BaseURL.Path, APIVersion, spath)
 
 	req, err := http.NewRequest(method, u.String(), bytes.NewReader(body))
 	if err != nil {
@@ -68,8 +66,8 @@ func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, bod
 
 // NewRequestPrivate returns a http request for private API.
 func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
-	u := *c.EndpointURL
-	u.Path = path.Join(c.EndpointURL.Path, "me", spath)
+	u := *c.BaseURL
+	u.Path = path.Join(c.BaseURL.Path, APIVersion, "me", spath)
 
 	req, err := http.NewRequest(method, u.String(), bytes.NewReader(body))
 	if err != nil {
