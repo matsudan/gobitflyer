@@ -1,4 +1,4 @@
-package lightning
+package bitflyer
 
 type Credentials struct {
 	// bitFlyer Lightning API key

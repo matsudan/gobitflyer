@@ -1,6 +1,8 @@
-package public
+package bitflyer
 
-import "context"
+import (
+	"context"
+)
 
 type Order struct {
 	Price float64
@@ -14,7 +16,7 @@ type GetBoardOutput struct {
 }
 
 func (c *Client) GetBoard(ctx context.Context, productCode string) (*GetBoardOutput, error) {
-	req, err := c.NewRequest(ctx, "GET", "board", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "board", nil)
 	if err != nil {
 		return nil, err
 	}

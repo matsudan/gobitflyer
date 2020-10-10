@@ -1,8 +1,9 @@
-package public
+package bitflyer
 
 import (
 	"context"
-	"github.com/matsudan/gobitflyer/api/public/types"
+
+	"github.com/matsudan/gobitflyer/bitflyer/types"
 )
 
 type GetBoardStateOutput struct {
@@ -14,7 +15,7 @@ type GetBoardStateOutput struct {
 }
 
 func (c *Client) GetBoardState(ctx context.Context, productCode string) (*GetBoardStateOutput, error) {
-	req, err := c.NewRequest(ctx, "GET", "getboardstate", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "getboardstate", nil)
 	if err != nil {
 		return nil, err
 	}

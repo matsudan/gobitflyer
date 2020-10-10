@@ -1,4 +1,4 @@
-package private
+package bitflyer
 
 import (
 	"bytes"
@@ -12,12 +12,11 @@ import (
 	"path"
 	"strconv"
 	"time"
-
-	"github.com/matsudan/gobitflyer/lightning"
 )
 
 const (
-	BaseURL = "https://api.bitflyer.com/v1"
+	BaseURL = "https://api.bitflyer.com/"
+	APIVersion = "v1"
 )
 
 type HTTPClient interface {
@@ -27,36 +26,20 @@ type HTTPClient interface {
 type Client struct {
 	Region      string
 	EndpointURL *url.URL
-	Credentials lightning.Credentials
+	Credentials Credentials
 	HTTPClient  HTTPClient
 }
 
-func New() (*Client, error) {
-	u, err := url.Parse(BaseURL)
-	if err != nil {
-		return &Client{}, err
-	}
+// NewClient returns a new bitFlyer API client.
+func NewClient(cfg Config) *Client {
+	u, _ := url.Parse(BaseURL)
 
-	client := &Client{
-		EndpointURL: u,
-		HTTPClient: &http.Client{
-			Timeout: time.Minute,
-		},
-	}
-
-	return client, nil
-}
-
-func NewFromConfig(cfg lightning.Config) (*Client, error) {
-	u, err := url.Parse(BaseURL)
-	if err != nil {
-		return &Client{}, err
-	}
+	u.Path = path.Join(u.Path, APIVersion)
 
 	client := &Client{
 		Region:      cfg.Region,
 		EndpointURL: u,
-		Credentials: lightning.Credentials{
+		Credentials: Credentials{
 			APIKey:    cfg.Credentials.APIKey,
 			APISecret: cfg.Credentials.APISecret,
 		},
@@ -65,10 +48,11 @@ func NewFromConfig(cfg lightning.Config) (*Client, error) {
 		},
 	}
 
-	return client, nil
+	return client
 }
 
-func (c *Client) NewRequest(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
+// NewRequestPublic returns a http request for public API.
+func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
 	u := *c.EndpointURL
 	u.Path = path.Join(c.EndpointURL.Path, spath)
 
@@ -77,21 +61,36 @@ func (c *Client) NewRequest(ctx context.Context, method, spath string, body []by
 		return nil, err
 	}
 
-	setAuthHeaders(req.Header, c.Credentials, method, u.String(), body)
+	req = req.WithContext(ctx)
+
+	return req, nil
+}
+
+// NewRequestPrivate returns a http request for private API.
+func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
+	u := *c.EndpointURL
+	u.Path = path.Join(c.EndpointURL.Path, "me", spath)
+
+	req, err := http.NewRequest(method, u.String(), bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	setAuthHeaders(req.Header, c.Credentials, method, u, body)
 
 	req = req.WithContext(ctx)
 
 	return req, nil
 }
 
-func setAuthHeaders(header http.Header, credentials lightning.Credentials, method string, path string, body []byte) {
+func setAuthHeaders(header http.Header, credentials Credentials, method string, path url.URL, body []byte) {
 	now := time.Now().Unix()
 	timestamp := strconv.FormatInt(now, 10)
 
 	h := hmac.New(sha256.New, []byte(credentials.APISecret))
 	h.Write([]byte(timestamp))
 	h.Write([]byte(method))
-	h.Write([]byte(path))
+	h.Write([]byte(path.Path))
 	if len(body) > 0 {
 		h.Write(body)
 	}

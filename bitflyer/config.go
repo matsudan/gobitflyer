@@ -1,4 +1,6 @@
-package lightning
+package bitflyer
+
+import "os"
 
 // A Config provides api configuration for api clients.
 type Config struct {
@@ -15,9 +17,15 @@ func NewConfig() *Config {
 	return &Config{}
 }
 
-// Copy will return a shallow copy of the Config object. If any additional
-// configurations are provided they will be merged into the new config returned.
-func (c Config) Copy() Config {
-	cp := c
-	return cp
+// LoadConfig returns a Config pointer with API credentials fetch from local environmental variables.
+func LoadConfig() *Config {
+	apiKey := os.Getenv("BITFLYER_API_KEY")
+	apiSecret := os.Getenv("BITFLYER_API_SECRET")
+
+	return &Config{
+		Credentials: Credentials{
+			APIKey: apiKey,
+			APISecret: apiSecret,
+		},
+	}
 }

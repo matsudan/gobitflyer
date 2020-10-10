@@ -1,8 +1,9 @@
-package public
+package bitflyer
 
 import (
 	"context"
-	"github.com/matsudan/gobitflyer/api/public/types"
+
+	"github.com/matsudan/gobitflyer/bitflyer/types"
 )
 
 type GetHealthOutput struct {
@@ -10,7 +11,7 @@ type GetHealthOutput struct {
 }
 
 func (c *Client) GetHealth(ctx context.Context) (*GetHealthOutput, error) {
-	req, err := c.NewRequest(ctx, "GET", "gethealth", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "gethealth", nil)
 	if err != nil {
 		return nil, err
 	}

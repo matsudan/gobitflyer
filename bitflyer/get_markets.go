@@ -1,4 +1,4 @@
-package public
+package bitflyer
 
 import (
 	"context"
@@ -15,7 +15,7 @@ type GetMarketListOutput struct {
 }
 
 func (c *Client) GetMarketList(ctx context.Context) (*GetMarketListOutput, error) {
-	req, err := c.NewRequest(ctx, "GET", "markets", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "markets", nil)
 	if err != nil {
 		return nil, err
 	}

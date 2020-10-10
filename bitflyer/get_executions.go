@@ -1,6 +1,8 @@
-package public
+package bitflyer
 
-import "context"
+import (
+	"context"
+)
 
 type Execution struct {
 	ID                         int64   `json:"id"`
@@ -23,7 +25,7 @@ type PaginationQuery struct {
 }
 
 func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery PaginationQuery) (*GetExecutionListOutput, error) {
-	req, err := c.NewRequest(ctx, "GET", "executions", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "executions", nil)
 	if err != nil {
 		return nil, err
 	}
