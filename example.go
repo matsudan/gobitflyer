@@ -78,10 +78,17 @@ func main() {
 	//
 	//fmt.Printf("collateral accounts: %#v\n",outputCollateralAccounts.CollateralAccounts)
 
-	outputAddresses, err := client.GetAddressList(ctx)
+	//outputAddresses, err := client.GetAddressList(ctx)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("addresses: %#v\n",outputAddresses.Addresses)
+
+	outputCoinIns, err := client.GetCoinInList(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("addresses: %#v\n",outputAddresses.Addresses)
+	fmt.Printf("coinins: %#v\n",outputCoinIns.CoinIns)
 }
