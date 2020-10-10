@@ -7,14 +7,30 @@
 ## Requirements
 
 ## Usage
+```go
+import "github.com/matsudan/gobitflyer/bitflyer"
+```
 
+Construct a new bitFlyer client, then access the bitFlyer APIs. For example:
+```go
+cfg := bitflyer.LoadConfig()
+client := bitflyer.NewClient(cfg)
 
-## Quick examples
+ticker, err := client.GetTicker(contexnt.Background(), "BTC_JPY")
+```
 
-Please see `example.go`
+### Authentication
+Set the BITFLYER_API_KEY and BITFLYER_API_SECRET environment variables.
+To set these variables on Linux, macOS, or Unix, use export :
+```
+export BITFLYER_API_KEY=your_api_key
+export BITFLYER_API_SECRET=your_api_secret
+```
+
+see [here](https://lightning.bitflyer.com/docs?lang=en#authentication)
 
 ## License
-Licensed under the MIT License.
+This library is distributed under the MIT License.
 
 ## Author
 @matsudan
