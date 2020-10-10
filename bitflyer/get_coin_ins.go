@@ -20,6 +20,7 @@ type GetCoinInListOutput struct {
 }
 
 func (c *Client) GetCoinInList(ctx context.Context) (*GetCoinInListOutput, error) {
+	// TODO: add pagination
 	req, err := c.NewRequestPrivate(ctx, "GET", "getcoinins", nil)
 	if err != nil {
 		return nil, err
