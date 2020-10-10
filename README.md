@@ -20,8 +20,8 @@ ticker, err := client.GetTicker(contexnt.Background(), "BTC_JPY")
 ```
 
 ### Authentication
-Set the BITFLYER_API_KEY and BITFLYER_API_SECRET environment variables.
-To set these variables on Linux, macOS, or Unix, use export :
+Set the `BITFLYER_API_KEY` and `BITFLYER_API_SECRET` environment variables.
+To set these variables on Linux, macOS, or Unix, use `export` :
 ```
 export BITFLYER_API_KEY=your_api_key
 export BITFLYER_API_SECRET=your_api_secret
