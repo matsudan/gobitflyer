@@ -64,17 +64,24 @@ func main() {
 	//
 	//fmt.Printf("balance list: %#v\n",outputBalance.Balance[0])
 
-	outputCollateral, err := client.GetCollateral(ctx)
+	//outputCollateral, err := client.GetCollateral(ctx)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("collateral: %#v\n",outputCollateral)
+
+	//outputCollateralAccounts, err := client.GetCollateralAccountList(ctx)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("collateral accounts: %#v\n",outputCollateralAccounts.CollateralAccounts)
+
+	outputAddresses, err := client.GetAddressList(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("collateral: %#v\n",outputCollateral)
-
-	outputCollateralAccounts, err := client.GetCollateralAccountList(ctx)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("collateral accounts: %#v\n",outputCollateralAccounts.CollateralAccounts)
+	fmt.Printf("addresses: %#v\n",outputAddresses.Addresses)
 }
