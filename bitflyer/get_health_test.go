@@ -13,7 +13,7 @@ import (
 )
 
 func TestClient_GetHealth(t *testing.T) {
-	srv := serverMock()
+	srv := serverHealthMock()
 	defer srv.Close()
 	u, _ := url.Parse(srv.URL)
 
@@ -50,15 +50,13 @@ func TestClient_GetHealth(t *testing.T) {
 	}
 }
 
-func serverMock() *httptest.Server {
+func serverHealthMock() *httptest.Server {
 	handler := http.NewServeMux()
-	handler.HandleFunc("/v1/gethealth", getHealthMock)
+	handler.HandleFunc("/v1/gethealth", func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(`{"Status": "NORMAL"}`))
+	})
 
 	srv := httptest.NewServer(handler)
 
 	return srv
-}
-
-func getHealthMock(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte(`{"Status": "NORMAL"}`))
 }

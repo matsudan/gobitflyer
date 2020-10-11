@@ -54,12 +54,10 @@ func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, bod
 	u := *c.BaseURL
 	u.Path = path.Join(c.BaseURL.Path, APIVersion, spath)
 
-	req, err := http.NewRequest(method, u.String(), bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
-
-	req = req.WithContext(ctx)
 
 	return req, nil
 }
@@ -69,14 +67,12 @@ func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, bo
 	u := *c.BaseURL
 	u.Path = path.Join(c.BaseURL.Path, APIVersion, "me", spath)
 
-	req, err := http.NewRequest(method, u.String(), bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
 
 	setAuthHeaders(req.Header, c.Credentials, method, u, body)
-
-	req = req.WithContext(ctx)
 
 	return req, nil
 }
