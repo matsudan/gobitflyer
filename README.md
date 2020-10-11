@@ -1,6 +1,6 @@
 # gobitflyer
 [![CircleCI](https://circleci.com/gh/matsudan/gobitflyer.svg?style=shield)](https://app.circleci.com/pipelines/github/matsudan/gobitflyer)
-[![codecov](https://codecov.io/gh/matsudan/gobitflyer/branch/master/graph/badge.svg)](https://codecov.io/gh/matsudan/gobitflyer)
+[![codecov](https://codecov.io/gh/matsudan/gobitflyer/branch/main/graph/badge.svg)](https://codecov.io/gh/matsudan/gobitflyer)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matsudan/gobitflyer/blob/master/LICENSE)
 
 `gobitflyer` is bitFlyer Lightning API library for Go.
