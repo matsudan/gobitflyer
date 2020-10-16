@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	BaseURL = "https://api.bitflyer.com/"
+	BaseURL    = "https://api.bitflyer.com/"
 	APIVersion = "v1"
 )
 
@@ -25,7 +25,7 @@ type HTTPClient interface {
 
 type Client struct {
 	Region      string
-	BaseURL *url.URL
+	BaseURL     *url.URL
 	Credentials Credentials
 	HTTPClient  HTTPClient
 }
@@ -35,7 +35,7 @@ func NewClient(cfg Config) *Client {
 	u, _ := url.Parse(BaseURL)
 
 	client := &Client{
-		Region:      cfg.Region,
+		Region:  cfg.Region,
 		BaseURL: u,
 		Credentials: Credentials{
 			APIKey:    cfg.Credentials.APIKey,
@@ -98,6 +98,8 @@ func setAuthHeaders(header http.Header, credentials Credentials, method string, 
 
 func decodeBody(resp *http.Response, out interface{}) error {
 	defer resp.Body.Close()
+	//b, _ := ioutil.ReadAll(resp.Body)
+	//fmt.Printf("BODY: %#v", string(b))
 	decoder := json.NewDecoder(resp.Body)
 
 	return decoder.Decode(out)

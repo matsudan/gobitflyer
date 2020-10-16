@@ -83,7 +83,7 @@ func main() {
 	//	fmt.Println(err)
 	//}
 	//
-	//fmt.Printf("addresses: %#v\n",outputAddresses.Addresses)
+	//fmt.Printf("addresses: %#v\n",outputAddresses)
 
 	//outputCoinIns, err := client.GetCoinInList(ctx)
 	//if err != nil {
@@ -92,10 +92,10 @@ func main() {
 	//
 	//fmt.Printf("coinins: %#v\n",outputCoinIns.CoinIns)
 
-	outputCoinOuts, err := client.GetCoinOutList(ctx)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("coinouts: %#v\n",outputCoinOuts.CoinOuts)
+	//outputCoinOuts, err := client.GetCoinOutList(ctx)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("coinouts: %#v\n",outputCoinOuts.CoinOuts)
 }
