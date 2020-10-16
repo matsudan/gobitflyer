@@ -6,12 +6,14 @@ import (
 	"github.com/matsudan/gobitflyer/bitflyer/types"
 )
 
+type BoardStateData struct {
+	SpecialQuotation float64 `json:"special_quotation"`
+}
+
 type GetBoardStateOutput struct {
 	Health types.Health `json:"health"`
 	State  types.State  `json:"state"`
-	Data   struct {
-		SpecialQuotation float64 `json:"special_quotation"`
-	} `json:"data"`
+	Data   BoardStateData `json:"data"`
 }
 
 func (c *Client) GetBoardState(ctx context.Context, productCode string) (*GetBoardStateOutput, error) {
