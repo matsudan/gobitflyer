@@ -1,4 +1,5 @@
 package bitflyer
+
 //
 //import (
 //	"context"

@@ -11,8 +11,8 @@ type BoardStateData struct {
 }
 
 type GetBoardStateOutput struct {
-	Health types.Health `json:"health"`
-	State  types.State  `json:"state"`
+	Health types.Health   `json:"health"`
+	State  types.State    `json:"state"`
 	Data   BoardStateData `json:"data"`
 }
 

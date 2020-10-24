@@ -32,7 +32,7 @@ func TestClient_GetBoardState(t *testing.T) {
 			},
 			want: &GetBoardStateOutput{
 				Health: types.HealthNormal,
-				State: types.StateMatured,
+				State:  types.StateMatured,
 				Data: BoardStateData{
 					SpecialQuotation: 410897,
 				},
@@ -40,7 +40,7 @@ func TestClient_GetBoardState(t *testing.T) {
 			wantErr: false,
 		},
 	}
-		for _, tt := range tests {
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c := Client{
 				BaseURL: u,
