@@ -24,7 +24,7 @@ func LoadConfig() *Config {
 
 	return &Config{
 		Credentials: Credentials{
-			APIKey: apiKey,
+			APIKey:    apiKey,
 			APISecret: apiSecret,
 		},
 	}
