@@ -1,6 +1,7 @@
 # gobitflyer
 [![Test Status](https://github.com/matsudan/gobitflyer/workflows/tests/badge.svg)](https://github.com/matsudan/gobitflyer/actions?query=workflow%3Atests)
 [![codecov](https://codecov.io/gh/matsudan/gobitflyer/branch/main/graph/badge.svg)](https://codecov.io/gh/matsudan/gobitflyer)
+[![Go Report Card](https://goreportcard.com/badge/matsudan/gobitflyer)](https://goreportcard.com/report/github.com/matsudan/gobitflyer)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matsudan/gobitflyer/blob/master/LICENSE)
 
 `gobitflyer` is bitFlyer Lightning API library for Go.
