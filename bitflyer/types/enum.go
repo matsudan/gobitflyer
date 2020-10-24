@@ -73,3 +73,13 @@ const (
 	// The exchange has been stopped. Orders will not be accepted.
 	ExchangeStatusStop ExchangeStatus = "STOP"
 )
+
+type DepositStatus string
+
+const (
+	// DepositStatusPending represents that the cash deposit is being processed.
+	DepositStatusPending DepositStatus = "PENDING"
+
+	// DepositStatusCompleted represents that the deposit has been completed.
+	DepositStatusCompleted DepositStatus = "COMPLETED"
+)

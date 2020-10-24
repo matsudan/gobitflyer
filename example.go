@@ -99,10 +99,17 @@ func main() {
 	//
 	//fmt.Printf("coinouts: %#v\n",outputCoinOuts.CoinOuts)
 
-	outputBankAccounts, err := client.GetBankAccountList(ctx)
+	//outputBankAccounts, err := client.GetBankAccountList(ctx)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//
+	//fmt.Printf("bank accounts: %#v\n", outputBankAccounts.BankAccounts[0])
+
+	outputDeposits, err := client.GetDepositList(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("bank accounts: %#v\n", outputBankAccounts.BankAccounts[0])
+	fmt.Printf("cash deposit: %#v\n", outputDeposits.Deposits)
 }
