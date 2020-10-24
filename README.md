@@ -1,5 +1,5 @@
 # gobitflyer
-[![CircleCI](https://circleci.com/gh/matsudan/gobitflyer.svg?style=shield)](https://app.circleci.com/pipelines/github/matsudan/gobitflyer)
+[![Test Status](https://github.com/matsudan/gobitflyer/workflows/tests/badge.svg)](https://github.com/matsudan/gobitflyer/actions?query=workflow%3Atests)
 [![codecov](https://codecov.io/gh/matsudan/gobitflyer/branch/main/graph/badge.svg)](https://codecov.io/gh/matsudan/gobitflyer)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matsudan/gobitflyer/blob/master/LICENSE)
 
