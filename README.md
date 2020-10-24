@@ -28,7 +28,7 @@ export BITFLYER_API_KEY=your_api_key
 export BITFLYER_API_SECRET=your_api_secret
 ```
 
-see [here](https://lightning.bitflyer.com/docs?lang=en#authentication)
+For more detailed information, see [here](https://lightning.bitflyer.com/docs?lang=en#authentication)
 
 ## License
 This library is distributed under the MIT License.
