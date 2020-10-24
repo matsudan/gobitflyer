@@ -39,7 +39,7 @@ func TestClient_GetCollateralAccountList(t *testing.T) {
 				CollateralAccounts: []*CollateralAccount{
 					{
 						CurrencyCode: "JPY",
-						Amount: 10000,
+						Amount:       10000,
 					},
 				},
 			},
@@ -54,18 +54,18 @@ func TestClient_GetCollateralAccountList(t *testing.T) {
 				CollateralAccounts: []*CollateralAccount{
 					{
 						CurrencyCode: "JPY",
-						Amount: 10000,
+						Amount:       10000,
 					},
 					{
 						CurrencyCode: "BTC",
-						Amount: 1.23,
+						Amount:       1.23,
 					},
 				},
 			},
 			wantErr: false,
 		},
 	}
-		for _, tt := range tests {
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			srv := serverCollateralAccountsMock(tt.fields.num)
 			defer srv.Close()
