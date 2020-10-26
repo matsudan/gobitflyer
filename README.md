@@ -4,6 +4,8 @@
 [![Go Report Card](https://goreportcard.com/badge/matsudan/gobitflyer)](https://goreportcard.com/report/github.com/matsudan/gobitflyer)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matsudan/gobitflyer/blob/master/LICENSE)
 
+:construction: this library is under construction.
+
 `gobitflyer` is bitFlyer Lightning API library for Go.
 
 ## Requirements
@@ -24,7 +26,8 @@ ticker, err := client.GetTicker(contexnt.Background(), "BTC_JPY")
 ### Authentication
 Set the `BITFLYER_API_KEY` and `BITFLYER_API_SECRET` environment variables.
 To set these variables on Linux, macOS, or Unix, use `export` :
-```
+
+```shell
 export BITFLYER_API_KEY=your_api_key
 export BITFLYER_API_SECRET=your_api_secret
 ```
