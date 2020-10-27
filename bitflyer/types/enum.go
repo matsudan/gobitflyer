@@ -1,5 +1,7 @@
 package types
 
+type ProductCode string
+
 type MarketType string
 
 const (
@@ -82,4 +84,53 @@ const (
 
 	// DepositStatusCompleted represents that the deposit has been completed.
 	DepositStatusCompleted DepositStatus = "COMPLETED"
+)
+
+type WithdrawalStatus string
+
+const (
+	// WithdrawalStatusPending represents that the withdrawal is being processed.
+	WithdrawalStatusPending WithdrawalStatus = "PENDING"
+
+	// WithdrawalStatusCompleted represents that the withdrawal has been completed.
+	WithdrawalStatusCompleted WithdrawalStatus = "COMPLETED"
+)
+
+type OrderSide string
+
+const (
+	// OrderSideBuy represents buy orders.
+	OrderSideBuy OrderSide = "BUY"
+
+	// OrderSideSell represents sell orders.
+	OrderSideSell OrderSide = "SELL"
+)
+
+type ChildOrderType string
+
+const (
+	// ChildOrderTypeLimit represents limit orders.
+	ChildOrderTypeLimit ChildOrderType = "LIMIT"
+
+	// ChildOrderTypeMarket represents market orders.
+	ChildOrderTypeMarket ChildOrderType = "MARKET"
+)
+
+type ChildOrderState string
+
+const (
+	// ChildOrderStateActive represents open orders.
+	ChildOrderStateActive ChildOrderState = "ACTIVE"
+
+	// ChildOrderStateCompleted represents fully completed orders.
+	ChildOrderStateCompleted ChildOrderState = "COMPLETED"
+
+	// ChildOrderStateCancelled represents orders that have been cancelled by the customer.
+	ChildOrderStateCanceled ChildOrderState = "CANCELED"
+
+	// ChildOrderStateExpired represents orders that have been cancelled due to expiry.
+	ChildOrderStateExpired ChildOrderState = "EXPIRED"
+
+	// ChildOrderStateRejected represents failed orders.
+	ChildOrderStateRejected ChildOrderState = "REJECTED"
 )

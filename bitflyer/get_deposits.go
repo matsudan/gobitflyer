@@ -6,7 +6,7 @@ import (
 	"github.com/matsudan/gobitflyer/bitflyer/types"
 )
 
-// Deposit represents a bank account that registered to your bitFlyer account.
+// Deposit represents a deposit of your bitFlyer account.
 type Deposit struct {
 	ID           int64               `json:"id"`
 	OrderID      string              `json:"order_id"`
