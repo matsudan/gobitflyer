@@ -4,11 +4,14 @@
 [![Go Report Card](https://goreportcard.com/badge/matsudan/gobitflyer)](https://goreportcard.com/report/github.com/matsudan/gobitflyer)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matsudan/gobitflyer/blob/master/LICENSE)
 
-:construction: this library is under construction.
+:construction: This library is under construction.
 
 `gobitflyer` is bitFlyer Lightning API library for Go.
 
-## Requirements
+## Installation
+```sh
+go get github.com/matsudan/gobitflyer
+```
 
 ## Usage
 ```go
