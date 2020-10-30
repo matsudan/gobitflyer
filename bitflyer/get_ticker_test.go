@@ -32,7 +32,7 @@ func TestClient_GetTicker(t *testing.T) {
 			},
 			want: &GetTickerOutput{
 				ProductCode:     "BTC_JPY",
-				State:           types.StateRunning,
+				State:           types.BoardStateRunning,
 				Timestamp:       "2015-07-08T02:50:59.97",
 				TickID:          3579,
 				BestBid:         30000,
