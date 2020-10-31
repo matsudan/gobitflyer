@@ -139,3 +139,22 @@ const (
 	// ChildOrderStateRejected represents failed orders.
 	ChildOrderStateRejected ChildOrderState = "REJECTED"
 )
+
+type ParentOrderState string
+
+const (
+	// ParentOrderStateActive represents open orders.
+	ParentOrderStateActive ParentOrderState = "ACTIVE"
+
+	// ParentOrderStateCompleted represents fully completed orders.
+	ParentOrderStateCompleted ParentOrderState = "COMPLETED"
+
+	// ParentOrderStateCancelled represents orders that have been cancelled by the customer.
+	ParentOrderStateCancelled ParentOrderState = "CANCELED"
+
+	// ParentOrderStateExpired represents orders that have been cancelled due to expiry.
+	ParentOrderStateExpired ParentOrderState = "EXPIRED"
+
+	// ParentOrderStateRejected represents failed orders.
+	ParentOrderStateRejected ParentOrderState = "REJECTED"
+)
