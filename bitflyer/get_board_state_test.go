@@ -31,8 +31,8 @@ func TestClient_GetBoardState(t *testing.T) {
 				productCode: "BTC_JPY",
 			},
 			want: &GetBoardStateOutput{
-				Health: types.HealthNormal,
-				State:  types.StateMatured,
+				Health: types.ExchangeHealthNormal,
+				State:  types.BoardStateMatured,
 				Data: BoardStateData{
 					SpecialQuotation: 410897,
 				},

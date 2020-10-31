@@ -11,13 +11,13 @@ type BoardStateData struct {
 }
 
 type GetBoardStateOutput struct {
-	Health types.Health   `json:"health"`
-	State  types.State    `json:"state"`
-	Data   BoardStateData `json:"data"`
+	Health types.ExchangeHealth `json:"health"`
+	State  types.BoardState     `json:"state"`
+	Data   BoardStateData       `json:"data"`
 }
 
 func (c *Client) GetBoardState(ctx context.Context, productCode string) (*GetBoardStateOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "getboardstate", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "getboardstate", nil, nil)
 	if err != nil {
 		return nil, err
 	}

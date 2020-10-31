@@ -15,7 +15,7 @@ type GetBalanceOutput struct {
 }
 
 func (c *Client) GetBalanceList(ctx context.Context) (*GetBalanceOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getbalance", nil)
+	req, err := c.NewRequestPrivate(ctx, "GET", "getbalance", nil, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -94,7 +94,7 @@ func TestClient_GetChildOrderList(t *testing.T) {
 						Price:                  30000,
 						AveragePrice:           0,
 						Size:                   0.1,
-						ChildOrderState:        types.ChildOrderStateCanceled,
+						ChildOrderState:        types.ChildOrderStateCancelled,
 						ExpireDate:             "2015-07-14T07:25:47",
 						ChildOrderDate:         "2015-07-07T08:45:47",
 						ChildOrderAcceptanceID: "JRF20150707-084547-396699",
@@ -120,7 +120,7 @@ func TestClient_GetChildOrderList(t *testing.T) {
 					Timeout: time.Minute,
 				},
 			}
-			got, err := c.GetChildOrderList(context.Background())
+			got, err := c.GetChildOrderList(context.Background(), nil)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetChildOrderList() error = %v, wantErr %v", err, tt.wantErr)
 				return

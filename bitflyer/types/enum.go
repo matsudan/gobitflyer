@@ -5,56 +5,61 @@ type ProductCode string
 type MarketType string
 
 const (
-	MarketTypeSpot    MarketType = "Spot"
-	MarketTypeFx      MarketType = "FX"
+	// MarketTypeSpot represents the market type is spot.
+	MarketTypeSpot MarketType = "Spot"
+
+	// MarketTypeFx represents the market type is FX.
+	MarketTypeFx MarketType = "FX"
+
+	// MarketTypeFutures represents the market type is Futures
 	MarketTypeFutures MarketType = "Futures"
 )
 
-type Health string
+type ExchangeHealth string
 
 const (
 	// The exchange is operating.
-	HealthNormal Health = "NORMAL"
+	ExchangeHealthNormal ExchangeHealth = "NORMAL"
 
 	// The exchange is experiencing high traffic.
-	HealthBusy Health = "BUSY"
+	ExchangeHealthBusy ExchangeHealth = "BUSY"
 
 	// The exchange is experiencing very heavy traffic.
-	HealthVeryBusy Health = "VERY BUSY"
+	ExchangeHealthVeryBusy ExchangeHealth = "VERY BUSY"
 
 	// The exchange is experiencing extremely heavy traffic. There is a possibility that orders will fail or be processed after a delay.
-	HealthSuperBusy Health = "SUPER BUSY"
+	ExchangeHealthSuperBusy ExchangeHealth = "SUPER BUSY"
 
 	// Orders can not be received.
-	HealthNoOrder Health = "NO ORDER"
+	ExchangeHealthNoOrder ExchangeHealth = "NO ORDER"
 
 	// The exchange has been stopped. Orders will not be accepted.
-	HealthStop Health = "STOP"
+	ExchangeHealthStop ExchangeHealth = "STOP"
 )
 
-type State string
+type BoardState string
 
 const (
 	// Operating
-	StateRunning State = "RUNNING"
+	BoardStateRunning BoardState = "RUNNING"
 
 	// Suspending
-	StateClosed State = "CLOSED"
+	BoardStateClosed BoardState = "CLOSED"
 
 	// Restarting
-	StateStarting State = "STARTING"
+	BoardStateStarting BoardState = "STARTING"
 
 	// Performing Itayose
-	StatePreOpen State = "PREOPEN"
+	BoardStatePreOpen BoardState = "PREOPEN"
 
 	// Circuit breaker triggered
-	StateCIRCUITBREAK State = "CIRCUIT BREAK"
+	BoardStateCircuitBreak BoardState = "CIRCUIT BREAK"
 
 	// Calculating SQ (special quotation) for Lightning Futures after trades complete
-	StateAwaitingSQ State = "AWAITING SQ"
+	BoardStateAwaitingSQ BoardState = "AWAITING SQ"
 
 	// Lightning Futures maturity reached
-	StateMatured State = "MATURED"
+	BoardStateMatured BoardState = "MATURED"
 )
 
 type ExchangeStatus string
@@ -126,7 +131,7 @@ const (
 	ChildOrderStateCompleted ChildOrderState = "COMPLETED"
 
 	// ChildOrderStateCancelled represents orders that have been cancelled by the customer.
-	ChildOrderStateCanceled ChildOrderState = "CANCELED"
+	ChildOrderStateCancelled ChildOrderState = "CANCELED"
 
 	// ChildOrderStateExpired represents orders that have been cancelled due to expiry.
 	ChildOrderStateExpired ChildOrderState = "EXPIRED"

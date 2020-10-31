@@ -22,8 +22,8 @@ type GetWithdrawalListOutput struct {
 }
 
 // GetWithdrawalList gets withdrawal history.
-func (c *Client) GetWithdrawalList(ctx context.Context) (*GetWithdrawalListOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getwithdrawals", nil)
+func (c *Client) GetWithdrawalList(ctx context.Context, paginationQuery *PaginationQuery) (*GetWithdrawalListOutput, error) {
+	req, err := c.NewRequestPrivate(ctx, "GET", "getwithdrawals", nil, paginationQuery)
 	if err != nil {
 		return nil, err
 	}

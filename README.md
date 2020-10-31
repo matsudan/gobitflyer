@@ -20,8 +20,7 @@ import "github.com/matsudan/gobitflyer/bitflyer"
 
 Construct a new bitFlyer client, then access the bitFlyer APIs. For example:
 ```go
-cfg := bitflyer.LoadConfig()
-client := bitflyer.NewClient(cfg)
+client := bitflyer.NewClient(nil)
 
 ticker, err := client.GetTicker(contexnt.Background(), "BTC_JPY")
 ```

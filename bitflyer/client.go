@@ -9,14 +9,15 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"strconv"
 	"time"
 )
 
 const (
-	BaseURL    = "https://api.bitflyer.com/"
-	APIVersion = "v1"
+	defaultBaseURL = "https://api.bitflyer.com/"
+	APIVersion     = "v1"
 )
 
 type HTTPClient interface {
@@ -24,33 +25,60 @@ type HTTPClient interface {
 }
 
 type Client struct {
-	Region      string
 	BaseURL     *url.URL
 	Credentials Credentials
 	HTTPClient  HTTPClient
 }
 
 // NewClient returns a new bitFlyer API client.
-func NewClient(cfg Config) *Client {
-	u, _ := url.Parse(BaseURL)
+func NewClient(httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{
+			Timeout: time.Minute,
+		}
+	}
+
+	u, _ := url.Parse(defaultBaseURL)
+
+	apiKey := os.Getenv("BITFLYER_API_KEY")
+	apiSecret := os.Getenv("BITFLYER_API_SECRET")
 
 	client := &Client{
-		Region:  cfg.Region,
 		BaseURL: u,
 		Credentials: Credentials{
-			APIKey:    cfg.Credentials.APIKey,
-			APISecret: cfg.Credentials.APISecret,
+			APIKey:    apiKey,
+			APISecret: apiSecret,
 		},
-		HTTPClient: &http.Client{
-			Timeout: time.Minute,
-		},
+		HTTPClient: httpClient,
 	}
 
 	return client
 }
 
+type PaginationQuery struct {
+	Count  string
+	Before string
+	After  string
+}
+
+func (p *PaginationQuery) setPaginationQueries(req *http.Request) {
+	q := req.URL.Query()
+
+	if p.Count != "" {
+		q.Add("count", p.Count)
+	}
+	if p.Before != "" {
+		q.Add("before", p.Before)
+	}
+	if p.After != "" {
+		q.Add("after", p.After)
+	}
+
+	req.URL.RawQuery = q.Encode()
+}
+
 // NewRequestPublic returns a http request for public API.
-func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
+func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, body []byte, paginationQuery *PaginationQuery) (*http.Request, error) {
 	u := *c.BaseURL
 	u.Path = path.Join(c.BaseURL.Path, APIVersion, spath)
 
@@ -59,11 +87,17 @@ func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, bod
 		return nil, err
 	}
 
+	if paginationQuery == nil {
+		return req, nil
+	}
+
+	paginationQuery.setPaginationQueries(req)
+
 	return req, nil
 }
 
 // NewRequestPrivate returns a http request for private API.
-func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body []byte) (*http.Request, error) {
+func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body []byte, paginationQuery *PaginationQuery) (*http.Request, error) {
 	u := *c.BaseURL
 	u.Path = path.Join(c.BaseURL.Path, APIVersion, "me", spath)
 
@@ -73,6 +107,12 @@ func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, bo
 	}
 
 	setAuthHeaders(req.Header, c.Credentials, method, u, body)
+
+	if paginationQuery == nil {
+		return req, nil
+	}
+
+	paginationQuery.setPaginationQueries(req)
 
 	return req, nil
 }
