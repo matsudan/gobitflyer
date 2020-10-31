@@ -9,14 +9,15 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"strconv"
 	"time"
 )
 
 const (
-	BaseURL    = "https://api.bitflyer.com/"
-	APIVersion = "v1"
+	defaultBaseURL = "https://api.bitflyer.com/"
+	APIVersion     = "v1"
 )
 
 type HTTPClient interface {
@@ -24,26 +25,31 @@ type HTTPClient interface {
 }
 
 type Client struct {
-	Region      string
 	BaseURL     *url.URL
 	Credentials Credentials
 	HTTPClient  HTTPClient
 }
 
 // NewClient returns a new bitFlyer API client.
-func NewClient(cfg Config) *Client {
-	u, _ := url.Parse(BaseURL)
+func NewClient(httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{
+			Timeout: time.Minute,
+		}
+	}
+
+	u, _ := url.Parse(defaultBaseURL)
+
+	apiKey := os.Getenv("BITFLYER_API_KEY")
+	apiSecret := os.Getenv("BITFLYER_API_SECRET")
 
 	client := &Client{
-		Region:  cfg.Region,
 		BaseURL: u,
 		Credentials: Credentials{
-			APIKey:    cfg.Credentials.APIKey,
-			APISecret: cfg.Credentials.APISecret,
+			APIKey:    apiKey,
+			APISecret: apiSecret,
 		},
-		HTTPClient: &http.Client{
-			Timeout: time.Minute,
-		},
+		HTTPClient: httpClient,
 	}
 
 	return client
