@@ -15,7 +15,7 @@ type GetMarketListOutput struct {
 }
 
 func (c *Client) GetMarketList(ctx context.Context) (*GetMarketListOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "markets", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "markets", nil, nil)
 	if err != nil {
 		return nil, err
 	}

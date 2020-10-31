@@ -90,7 +90,7 @@ func TestClient_GetDepositList(t *testing.T) {
 					Timeout: time.Minute,
 				},
 			}
-			got, err := c.GetDepositList(context.Background())
+			got, err := c.GetDepositList(context.Background(), nil)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetDepositList() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -91,7 +91,7 @@ func TestClient_GetWithdrawalList(t *testing.T) {
 					Timeout: time.Minute,
 				},
 			}
-			got, err := c.GetWithdrawalList(context.Background())
+			got, err := c.GetWithdrawalList(context.Background(), nil)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetWithdrawalList() error = %v, wantErr %v", err, tt.wantErr)
 				return

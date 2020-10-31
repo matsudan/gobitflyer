@@ -19,7 +19,7 @@ type GetCollateralOutput struct {
 }
 
 func (c *Client) GetCollateral(ctx context.Context) (*GetCollateralOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getcollateral", nil)
+	req, err := c.NewRequestPrivate(ctx, "GET", "getcollateral", nil, nil)
 	if err != nil {
 		return nil, err
 	}

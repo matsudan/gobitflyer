@@ -15,7 +15,7 @@ type GetAddressListOutput struct {
 }
 
 func (c *Client) GetAddressList(ctx context.Context) (*GetAddressListOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getaddresses", nil)
+	req, err := c.NewRequestPrivate(ctx, "GET", "getaddresses", nil, nil)
 	if err != nil {
 		return nil, err
 	}

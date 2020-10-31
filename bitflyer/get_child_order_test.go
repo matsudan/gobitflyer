@@ -120,7 +120,7 @@ func TestClient_GetChildOrderList(t *testing.T) {
 					Timeout: time.Minute,
 				},
 			}
-			got, err := c.GetChildOrderList(context.Background())
+			got, err := c.GetChildOrderList(context.Background(), nil)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetChildOrderList() error = %v, wantErr %v", err, tt.wantErr)
 				return

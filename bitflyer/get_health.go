@@ -11,7 +11,7 @@ type GetHealthOutput struct {
 }
 
 func (c *Client) GetHealth(ctx context.Context) (*GetHealthOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "gethealth", nil)
+	req, err := c.NewRequestPublic(ctx, "GET", "gethealth", nil, nil)
 	if err != nil {
 		return nil, err
 	}

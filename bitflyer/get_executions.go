@@ -18,34 +18,14 @@ type GetExecutionListOutput struct {
 	Executions []*Execution
 }
 
-type PaginationQuery struct {
-	Count  string
-	Before string
-	After  string
-}
-
-func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery PaginationQuery) (*GetExecutionListOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "executions", nil)
+func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery *PaginationQuery) (*GetExecutionListOutput, error) {
+	req, err := c.NewRequestPublic(ctx, "GET", "executions", nil, paginationQuery)
 	if err != nil {
 		return nil, err
 	}
 
-	count := paginationQuery.Count
-	before := paginationQuery.Before
-	after := paginationQuery.After
-
 	q := req.URL.Query()
 	q.Add("product_code", productCode)
-
-	if count != "" {
-		q.Add("count", count)
-	}
-	if before != "" {
-		q.Add("before", before)
-	}
-	if after != "" {
-		q.Add("after", after)
-	}
 
 	req.URL.RawQuery = q.Encode()
 
