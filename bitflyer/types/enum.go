@@ -158,3 +158,16 @@ const (
 	// ParentOrderStateRejected represents failed orders.
 	ParentOrderStateRejected ParentOrderState = "REJECTED"
 )
+
+type TimeInForce string
+
+const (
+	// TimeInForceGTC represents A Good 'Til Canceled order that is one where the order remains in effect until it is either filled or canceled.
+	TimeInForceGTC TimeInForce = "GTC"
+
+	// TimeInForceIOC represents Immediate or Cancel order.
+	TimeInForceIOC TimeInForce = "IOC"
+
+	// TimeInForceFOK represents Fill or Kill that refer to when the order is canceled if the volume is not immediately contracted (filled) in its entirety.
+	TimeInForceFOK TimeInForce = "FOK"
+)
