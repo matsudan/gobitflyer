@@ -170,7 +170,7 @@ func (c *Client) Do(ctx context.Context, req *http.Request) (*http.Response, err
 }
 
 type Error struct {
-	Status       int64 `json:"status"`
+	Status       int64  `json:"status"`
 	ErrorMessage string `json:"error_message"`
 	Data         string `json:"data"`
 }
