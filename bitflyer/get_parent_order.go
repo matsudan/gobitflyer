@@ -69,7 +69,7 @@ func (c *Client) GetParentOrder(ctx context.Context, parentOrderID string, paren
 		req.URL.RawQuery = q.Encode()
 	}
 
-	res, err := c.HTTPClient.Do(req)
+	res, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}

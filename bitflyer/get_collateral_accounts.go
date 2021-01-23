@@ -19,7 +19,7 @@ func (c *Client) GetCollateralAccountList(ctx context.Context) (*GetCollateralAc
 		return nil, err
 	}
 
-	res, err := c.HTTPClient.Do(req)
+	res, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}

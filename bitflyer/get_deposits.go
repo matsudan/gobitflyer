@@ -28,7 +28,7 @@ func (c *Client) GetDepositList(ctx context.Context, paginationQuery *Pagination
 		return nil, err
 	}
 
-	res, err := c.HTTPClient.Do(req)
+	res, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}

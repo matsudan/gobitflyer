@@ -19,7 +19,7 @@ type GetExecutionListOutput struct {
 }
 
 func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery *PaginationQuery) (*GetExecutionListOutput, error) {
-	req, err := c.NewRequest(ctx, "GET", "executions", nil, paginationQuery, true)
+	req, err := c.NewRequest(ctx, "GET", "executions", nil, paginationQuery, false)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (c *Client) GetExecutionList(ctx context.Context, productCode string, pagin
 
 	req.URL.RawQuery = q.Encode()
 
-	res, err := c.HTTPClient.Do(req)
+	res, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
