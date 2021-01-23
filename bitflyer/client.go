@@ -7,6 +7,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -97,16 +98,27 @@ func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, bod
 }
 
 // NewRequestPrivate returns a http request for private API.
-func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body []byte, paginationQuery *PaginationQuery) (*http.Request, error) {
+func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body interface{}, paginationQuery *PaginationQuery) (*http.Request, error) {
 	u := *c.BaseURL
 	u.Path = path.Join(c.BaseURL.Path, APIVersion, "me", spath)
 
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
+	var buf io.ReadWriter
+	if body != nil {
+		buf = &bytes.Buffer{}
+		enc := json.NewEncoder(buf)
+		enc.SetEscapeHTML(false)
+		err := enc.Encode(body)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	req, err := http.NewRequestWithContext(ctx, method, u.String(), buf)
 	if err != nil {
 		return nil, err
 	}
 
-	setAuthHeaders(req.Header, c.Credentials, method, u, body)
+	setAuthHeaders(req.Header, c.Credentials, method, u)
 
 	if paginationQuery == nil {
 		return req, nil
@@ -117,7 +129,7 @@ func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, bo
 	return req, nil
 }
 
-func setAuthHeaders(header http.Header, credentials Credentials, method string, path url.URL, body []byte) {
+func setAuthHeaders(header http.Header, credentials Credentials, method string, path url.URL) {
 	now := time.Now().Unix()
 	timestamp := strconv.FormatInt(now, 10)
 
@@ -125,9 +137,7 @@ func setAuthHeaders(header http.Header, credentials Credentials, method string, 
 	h.Write([]byte(timestamp))
 	h.Write([]byte(method))
 	h.Write([]byte(path.Path))
-	if len(body) > 0 {
-		h.Write(body)
-	}
+
 	sign := hex.EncodeToString(h.Sum(nil))
 
 	header.Set("Content-Type", "application/json")
