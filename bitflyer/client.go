@@ -7,7 +7,9 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -150,4 +152,57 @@ func decodeBody(resp *http.Response, out interface{}) error {
 	decoder := json.NewDecoder(resp.Body)
 
 	return decoder.Decode(out)
+}
+
+func (c *Client) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
+	resp, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	err = CheckResponse(resp)
+	if err != nil {
+		defer resp.Body.Close()
+		return resp, err
+	}
+
+	return resp, err
+}
+
+type Error struct {
+	Status       string `json:"status"`
+	ErrorMessage string `json:"error_message"`
+	Data         string `json:"data"`
+}
+
+func (e *Error) Error() string {
+	return fmt.Sprintf("Status: %v, Message: %v, Data: %v",
+		e.Status, e.ErrorMessage, e.Data)
+}
+
+type ErrorResponse struct {
+	Response *http.Response // HTTP response that caused this error
+	Err      Error
+}
+
+func (r *ErrorResponse) Error() string {
+	return fmt.Sprintf("%v %v: %d, error: %v",
+		r.Response.Request.Method, r.Response.Request.URL, r.Response.StatusCode, r.Err.Error(),
+	)
+}
+
+func CheckResponse(r *http.Response) error {
+	if c := r.StatusCode; 200 <= c && c <= 299 {
+		return nil
+	}
+
+	errorResponse := &ErrorResponse{Response: r}
+	data, err := ioutil.ReadAll(r.Body)
+	if err == nil && data != nil {
+		json.Unmarshal(data, &errorResponse.Err)
+	}
+
+	r.Body = ioutil.NopCloser(bytes.NewBuffer(data))
+
+	return errorResponse
 }

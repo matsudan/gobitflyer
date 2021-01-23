@@ -26,7 +26,7 @@ func (c *Client) GetCoinInList(ctx context.Context, paginationQuery *PaginationQ
 		return nil, err
 	}
 
-	res, err := c.HTTPClient.Do(req)
+	res, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}

@@ -20,7 +20,7 @@ func (c *Client) GetAddressList(ctx context.Context) (*GetAddressListOutput, err
 		return nil, err
 	}
 
-	res, err := c.HTTPClient.Do(req)
+	res, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
