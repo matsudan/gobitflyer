@@ -50,7 +50,7 @@ func (c *Client) GetParentOrder(ctx context.Context, parentOrderID string, paren
 		)
 	}
 
-	req, err := c.NewRequestPrivate(ctx, "GET", "getparentorder", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "getparentorder", nil, nil, true)
 	if err != nil {
 		return nil, err
 	}

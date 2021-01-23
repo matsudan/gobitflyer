@@ -18,7 +18,8 @@ import (
 
 const (
 	defaultBaseURL = "https://api.bitflyer.com/"
-	APIVersion     = "v1"
+	apiVersion     = "v1"
+	userAgent      = "gobitflyer"
 )
 
 type HTTPClient interface {
@@ -29,6 +30,9 @@ type Client struct {
 	BaseURL     *url.URL
 	Credentials Credentials
 	HTTPClient  HTTPClient
+
+	// User agent used when communicating with the bitFlyer Lightning API.
+	UserAgent string
 }
 
 // NewClient returns a new bitFlyer API client.
@@ -51,6 +55,7 @@ func NewClient(httpClient *http.Client) *Client {
 			APISecret: apiSecret,
 		},
 		HTTPClient: httpClient,
+		UserAgent:  userAgent,
 	}
 
 	return client
@@ -78,29 +83,14 @@ func (p *PaginationQuery) setPaginationQueries(req *http.Request) {
 	req.URL.RawQuery = q.Encode()
 }
 
-// NewRequestPublic returns a http request for public API.
-func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, body []byte, paginationQuery *PaginationQuery) (*http.Request, error) {
+// NewRequest returns a http request.
+func (c *Client) NewRequest(ctx context.Context, method, pathStr string, body interface{}, paginationQuery *PaginationQuery, isPrivate bool) (*http.Request, error) {
 	u := *c.BaseURL
-	u.Path = path.Join(c.BaseURL.Path, APIVersion, spath)
-
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
-	if err != nil {
-		return nil, err
+	if isPrivate {
+		u.Path = path.Join(c.BaseURL.Path, apiVersion, "me", pathStr)
+	} else {
+		u.Path = path.Join(c.BaseURL.Path, apiVersion, pathStr)
 	}
-
-	if paginationQuery == nil {
-		return req, nil
-	}
-
-	paginationQuery.setPaginationQueries(req)
-
-	return req, nil
-}
-
-// NewRequestPrivate returns a http request for private API.
-func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body interface{}, paginationQuery *PaginationQuery) (*http.Request, error) {
-	u := *c.BaseURL
-	u.Path = path.Join(c.BaseURL.Path, APIVersion, "me", spath)
 
 	var buf io.ReadWriter
 	if body != nil {
@@ -118,7 +108,15 @@ func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, bo
 		return nil, err
 	}
 
-	setAuthHeaders(req.Header, c.Credentials, method, u)
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
+	if c.UserAgent != "" {
+		req.Header.Set("User-Agent", c.UserAgent)
+	}
+	if isPrivate {
+		setAuthHeaders(req.Header, c.Credentials, method, u)
+	}
 
 	if paginationQuery == nil {
 		return req, nil
@@ -140,7 +138,6 @@ func setAuthHeaders(header http.Header, credentials Credentials, method string, 
 
 	sign := hex.EncodeToString(h.Sum(nil))
 
-	header.Set("Content-Type", "application/json")
 	header.Set("ACCESS-KEY", credentials.APIKey)
 	header.Set("ACCESS-TIMESTAMP", timestamp)
 	header.Set("ACCESS-SIGN", sign)

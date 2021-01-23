@@ -19,7 +19,7 @@ type GetExecutionListOutput struct {
 }
 
 func (c *Client) GetExecutionList(ctx context.Context, productCode string, paginationQuery *PaginationQuery) (*GetExecutionListOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "executions", nil, paginationQuery)
+	req, err := c.NewRequest(ctx, "GET", "executions", nil, paginationQuery, true)
 	if err != nil {
 		return nil, err
 	}

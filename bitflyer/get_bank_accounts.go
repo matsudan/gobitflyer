@@ -23,7 +23,7 @@ type GetBankAccountListOutput struct {
 // GetBankAccountList gets summary of bank accounts.
 func (c *Client) GetBankAccountList(ctx context.Context) (*GetBankAccountListOutput, error) {
 
-	req, err := c.NewRequestPrivate(ctx, "GET", "getbankaccounts", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "getbankaccounts", nil, nil, true)
 	if err != nil {
 		return nil, err
 	}

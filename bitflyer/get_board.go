@@ -16,7 +16,7 @@ type GetBoardOutput struct {
 }
 
 func (c *Client) GetBoard(ctx context.Context, productCode string) (*GetBoardOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "board", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "board", nil, nil, false)
 	if err != nil {
 		return nil, err
 	}

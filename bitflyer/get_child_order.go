@@ -32,7 +32,7 @@ type GetChildOrderListOutput struct {
 
 // GetChildOrderList gets child orders.
 func (c *Client) GetChildOrderList(ctx context.Context, paginationQuery *PaginationQuery) (*GetChildOrderListOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getchildorders", nil, paginationQuery)
+	req, err := c.NewRequest(ctx, "GET", "getchildorders", nil, paginationQuery, true)
 	if err != nil {
 		return nil, err
 	}
