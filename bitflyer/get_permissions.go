@@ -9,7 +9,7 @@ type GetPermissionListOutput struct {
 }
 
 func (c *Client) GetPermissionList(ctx context.Context) (*GetPermissionListOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getpermissions", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "getpermissions", nil, nil, true)
 	if err != nil {
 		return nil, err
 	}

@@ -21,7 +21,7 @@ type GetCoinInListOutput struct {
 
 func (c *Client) GetCoinInList(ctx context.Context, paginationQuery *PaginationQuery) (*GetCoinInListOutput, error) {
 	// TODO: add pagination
-	req, err := c.NewRequestPrivate(ctx, "GET", "getcoinins", nil, paginationQuery)
+	req, err := c.NewRequest(ctx, "GET", "getcoinins", nil, paginationQuery, true)
 	if err != nil {
 		return nil, err
 	}

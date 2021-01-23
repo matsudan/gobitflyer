@@ -15,7 +15,7 @@ type GetChatListOutput struct {
 }
 
 func (c *Client) GetChatList(ctx context.Context, fromDate string) (*GetChatListOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "getchats", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "getchats", nil, nil, false)
 	if err != nil {
 		return nil, err
 	}

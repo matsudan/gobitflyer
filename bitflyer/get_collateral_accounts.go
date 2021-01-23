@@ -14,7 +14,7 @@ type GetCollateralAccountsOutput struct {
 }
 
 func (c *Client) GetCollateralAccountList(ctx context.Context) (*GetCollateralAccountsOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getcollateralaccounts", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "getcollateralaccounts", nil, nil, true)
 	if err != nil {
 		return nil, err
 	}

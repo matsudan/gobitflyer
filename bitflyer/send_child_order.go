@@ -21,7 +21,7 @@ type SendChildOrderOutput struct {
 
 func (c *Client) SendChildOrder(ctx context.Context, sendChildOrderInput *SendChildOrderInput) (*SendChildOrderOutput, error) {
 
-	req, err := c.NewRequestPrivate(ctx, "POST", "sendchildorder", sendChildOrderInput, nil)
+	req, err := c.NewRequest(ctx, "POST", "sendchildorder", sendChildOrderInput, nil, true)
 	if err != nil {
 		return nil, err
 	}

@@ -84,7 +84,7 @@ func (p *PaginationQuery) setPaginationQueries(req *http.Request) {
 }
 
 // NewRequest returns a http request.
-func (c *Client) NewRequest(ctx context.Context, method, pathStr string, body []byte, paginationQuery *PaginationQuery, isPrivate bool) (*http.Request, error) {
+func (c *Client) NewRequest(ctx context.Context, method, pathStr string, body interface{}, paginationQuery *PaginationQuery, isPrivate bool) (*http.Request, error) {
 	u := *c.BaseURL
 	if isPrivate {
 		u.Path = path.Join(c.BaseURL.Path, apiVersion, "me", pathStr)
@@ -127,57 +127,6 @@ func (c *Client) NewRequest(ctx context.Context, method, pathStr string, body []
 	return req, nil
 }
 
-// NewRequestPublic returns a http request for public API.
-func (c *Client) NewRequestPublic(ctx context.Context, method, spath string, body []byte, paginationQuery *PaginationQuery) (*http.Request, error) {
-	u := *c.BaseURL
-	u.Path = path.Join(c.BaseURL.Path, apiVersion, spath)
-
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
-	if err != nil {
-		return nil, err
-	}
-
-	if paginationQuery == nil {
-		return req, nil
-	}
-
-	paginationQuery.setPaginationQueries(req)
-
-	return req, nil
-}
-
-// NewRequestPrivate returns a http request for private API.
-func (c *Client) NewRequestPrivate(ctx context.Context, method, spath string, body interface{}, paginationQuery *PaginationQuery) (*http.Request, error) {
-	u := *c.BaseURL
-	u.Path = path.Join(c.BaseURL.Path, apiVersion, "me", spath)
-
-	var buf io.ReadWriter
-	if body != nil {
-		buf = &bytes.Buffer{}
-		enc := json.NewEncoder(buf)
-		enc.SetEscapeHTML(false)
-		err := enc.Encode(body)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), buf)
-	if err != nil {
-		return nil, err
-	}
-
-	setAuthHeaders(req.Header, c.Credentials, method, u)
-
-	if paginationQuery == nil {
-		return req, nil
-	}
-
-	paginationQuery.setPaginationQueries(req)
-
-	return req, nil
-}
-
 func setAuthHeaders(header http.Header, credentials Credentials, method string, path url.URL) {
 	now := time.Now().Unix()
 	timestamp := strconv.FormatInt(now, 10)
@@ -189,7 +138,6 @@ func setAuthHeaders(header http.Header, credentials Credentials, method string, 
 
 	sign := hex.EncodeToString(h.Sum(nil))
 
-	header.Set("Content-Type", "application/json")
 	header.Set("ACCESS-KEY", credentials.APIKey)
 	header.Set("ACCESS-TIMESTAMP", timestamp)
 	header.Set("ACCESS-SIGN", sign)

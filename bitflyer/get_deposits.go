@@ -23,7 +23,7 @@ type GetDepositListOutput struct {
 
 // GetDepositList gets cash deposits.
 func (c *Client) GetDepositList(ctx context.Context, paginationQuery *PaginationQuery) (*GetDepositListOutput, error) {
-	req, err := c.NewRequestPrivate(ctx, "GET", "getdeposits", nil, paginationQuery)
+	req, err := c.NewRequest(ctx, "GET", "getdeposits", nil, paginationQuery, true)
 	if err != nil {
 		return nil, err
 	}

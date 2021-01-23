@@ -25,7 +25,7 @@ type GetTickerOutput struct {
 }
 
 func (c *Client) GetTicker(ctx context.Context, productCode string) (*GetTickerOutput, error) {
-	req, err := c.NewRequestPublic(ctx, "GET", "ticker", nil, nil)
+	req, err := c.NewRequest(ctx, "GET", "ticker", nil, nil, false)
 	if err != nil {
 		return nil, err
 	}
